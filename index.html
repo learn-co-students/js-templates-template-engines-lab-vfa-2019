@@ -5,7 +5,57 @@
   </head>
   <body>
     <main>
+      <form id=post-form onsubmit="createPost(); return false;">
+        Title: <input type="text" id="postTitle"><br>
+        Body: <input type="textarea" id="postBody"><br>
+        Author: <input type="text" id="postAuthor"><br>
+        <input type="submit">
+      </form>
+
+      <form class="hidden-element" onsubmit="postComment();return false;">
+        Name: <input type="text" id="commenter"><br>
+        Comment: <input type="textarea" id="comment"><br>
+        <input type="submit">
+      </form>
+
+      <div class="hidden-element" id="comments">
+        <h1>Comments</h1>
+      </div>
+
+      <script id="page-template" type="text/x-lodash-template">
+        <div id="sidebar"></div>
+        <div id="post"><%= blogPost %></div>
+      </script>
+
+      <script id="post-template" type="text/x-lodash-template">
+        <article>
+          <header><%= postTitle %></header>
+          <%= postBody %>
+          <footer><%= postAuthor %></footer>
+        </article>
+        <%= commentsSection %>
+
+      </script>
+
+      <script id="comments-template" type="text/x-lodash-template">
+        <form onsubmit="postComment();return false;">
+          Name: <input type="text" id="commenter"><br>
+          Comment: <input type="textarea" id="comment"><br>
+          <input type="submit">
+        </form>
+        <div id="comments">
+          <h1>Comments</h1>
+        </div>
+      </script>
+
+      <script id="comment-template" type="text/x-lodash-template">
+        <article>
+          <%= comment %>
+          <footer><%= commenter %></footer>
+        </article>
+      </script>
     </main>
+
     <script src="node_modules/lodash/lodash.min.js"></script>
     <script src="index.js"></script>
     <!-- Open this file and call `mocha.run()` in console to run tests -->
@@ -15,5 +65,6 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script>mocha.setup('bdd');</script>
     <script src="test/index-test.js"></script>
+
   </body>
 </html>
